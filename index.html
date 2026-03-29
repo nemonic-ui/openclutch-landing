@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OPENCLUTCH — Founding Tier</title>
+  <meta name="description" content="Ancient wisdom. Ethical architecture. Local sovereignty — personal and collective. The token is a vote. The board is yours.">
+  <meta property="og:title" content="OPENCLUTCH — Founding Tier">
+  <meta property="og:description" content="Ancient wisdom. Ethical architecture. Local sovereignty — personal and collective.">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #0a0a0a;
+      --border:  #1a1a1a;
+      --accent:  #e8ff00;
+      --dim:     #444444;
+      --text:    #f0f0f0;
+      --muted:   #555555;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.35;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 0.3rem 0.9rem;
+      margin-bottom: 2.5rem;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeup 0.5s ease 0.1s forwards;
+    }
+
+    .wordmark {
+      font-size: clamp(2.4rem, 9vw, 5rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      opacity: 0;
+      animation: fadeup 0.5s ease 0.3s forwards;
+    }
+
+    .wordmark span { color: var(--accent); }
+
+    .philosophy {
+      margin-top: 2rem;
+      font-size: clamp(0.7rem, 1.8vw, 0.85rem);
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      line-height: 2;
+      opacity: 0;
+      animation: fadeup 0.5s ease 0.5s forwards;
+    }
+
+    .philosophy em {
+      color: var(--text);
+      font-style: normal;
+    }
+
+    .divider {
+      margin: 2rem auto;
+      width: 40px;
+      height: 1px;
+      background: var(--border);
+      opacity: 0;
+      animation: fadeup 0.5s ease 0.6s forwards;
+    }
+
+    .token-statement {
+      font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+      color: var(--text);
+      letter-spacing: 0.05em;
+      line-height: 1.8;
+      opacity: 0;
+      animation: fadeup 0.5s ease 0.7s forwards;
+    }
+
+    .token-statement strong {
+      color: var(--accent);
+      font-weight: 900;
+    }
+
+    /* Countdown */
+    .countdown-wrap {
+      margin: 2.5rem 0 2rem;
+      opacity: 0;
+      animation: fadeup 0.5s ease 0.85s forwards;
+    }
+
+    .countdown-label {
+      font-size: 0.55rem;
+      letter-spacing: 0.3em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: clamp(0.8rem, 3vw, 2rem);
+    }
+
+    .unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .unit-value {
+      font-size: clamp(2rem, 7vw, 3.5rem);
+      font-weight: 900;
+      color: var(--text);
+      line-height: 1;
+      min-width: 2ch;
+      font-variant-numeric: tabular-nums;
+      transition: color 0.12s;
+    }
+
+    .unit-value.tick { color: var(--accent); }
+
+    .unit-label {
+      font-size: 0.5rem;
+      letter-spacing: 0.2em;
+      color: var(--dim);
+      text-transform: uppercase;
+    }
+
+    .sep {
+      font-size: clamp(2rem, 7vw, 3.5rem);
+      font-weight: 900;
+      color: var(--border);
+      line-height: 1;
+      animation: blink 1s step-end infinite;
+    }
+
+    /* CTA */
+    .cta {
+      opacity: 0;
+      animation: fadeup 0.5s ease 1s forwards;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.85rem 2.2rem;
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      font-family: inherit;
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .btn:hover {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    .sub-links {
+      margin-top: 1rem;
+      font-size: 0.55rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+    }
+
+    .sub-links a {
+      color: var(--dim);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .sub-links a:hover { color: var(--text); }
+
+    .launched { display: none; }
+
+    /* Footer */
+    .footer {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 0; right: 0;
+      text-align: center;
+      font-size: 0.5rem;
+      letter-spacing: 0.2em;
+      color: var(--dim);
+      opacity: 0;
+      animation: fadeup 0.5s ease 1.2s forwards;
+      z-index: 1;
+    }
+
+    @keyframes fadeup {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+
+    @media (max-width: 420px) { .sep { display: none; } }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="badge">OpenClaw DAO · Founding Tier</div>
+
+    <div class="wordmark">OPEN<span>CLUTCH</span></div>
+
+    <div class="philosophy">
+      Ancient wisdom. Ethical architecture.<br>
+      <em>Personal sovereignty. Collective sovereignty.</em><br>
+      Local-first. No cloud. No compromise.
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="token-statement">
+      <strong>The token is a vote.</strong><br>
+      The founding tier sets the board.<br>
+      Philosopher kings — not appointed by capital,<br>earned through understanding.
+    </div>
+
+    <div class="countdown-wrap">
+      <div class="countdown-label">Founding tier opens in</div>
+      <div class="countdown">
+        <div class="unit">
+          <div class="unit-value" id="days">00</div>
+          <div class="unit-label">Days</div>
+        </div>
+        <div class="sep">:</div>
+        <div class="unit">
+          <div class="unit-value" id="hours">00</div>
+          <div class="unit-label">Hours</div>
+        </div>
+        <div class="sep">:</div>
+        <div class="unit">
+          <div class="unit-value" id="minutes">00</div>
+          <div class="unit-label">Min</div>
+        </div>
+        <div class="sep">:</div>
+        <div class="unit">
+          <div class="unit-value" id="seconds">00</div>
+          <div class="unit-label">Sec</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta" id="cta-pre">
+      <a class="btn" href="https://x.com/OPENCLUTCH2" target="_blank" rel="noopener">
+        Follow @OPENCLUTCH2
+      </a>
+      <div class="sub-links">
+        Founding seats are finite &nbsp;·&nbsp;
+        <a href="https://github.com/nemonic-ui/open-clutch" target="_blank" rel="noopener">GitHub</a>
+        &nbsp;·&nbsp;
+        <a href="https://x.com/theradiomachine" target="_blank" rel="noopener">@theradiomachine</a>
+      </div>
+    </div>
+
+    <div class="cta launched" id="cta-live">
+      <a class="btn" href="https://github.com/nemonic-ui/open-clutch" target="_blank" rel="noopener">
+        Install Now
+      </a>
+      <div class="sub-links">
+        <code style="font-size:0.65rem;color:#666">curl -sSf https://raw.githubusercontent.com/nemonic-ui/open-clutch/main/install.sh | sh</code>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    OPENCLUTCH &nbsp;·&nbsp; OpenClaw DAO &nbsp;·&nbsp; nemonic-ui &nbsp;·&nbsp; the stack runs local now
+  </div>
+
+  <script>
+    // ── Drop date ────────────────────────────────────────────────
+    const DROP = new Date('2026-04-15T00:00:00Z');
+    // ────────────────────────────────────────────────────────────
+
+    const els = {
+      days:    document.getElementById('days'),
+      hours:   document.getElementById('hours'),
+      minutes: document.getElementById('minutes'),
+      seconds: document.getElementById('seconds'),
+    };
+
+    function pad(n) { return String(Math.max(0,n)).padStart(2,'0'); }
+
+    function tick() {
+      const diff = DROP - Date.now();
+      if (diff <= 0) {
+        Object.values(els).forEach(el => el.textContent = '00');
+        document.getElementById('cta-pre').style.display  = 'none';
+        document.getElementById('cta-live').style.display = 'block';
+        return;
+      }
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor((diff % 86400000) / 3600000);
+      const m = Math.floor((diff % 3600000)  / 60000);
+      const s = Math.floor((diff % 60000)    / 1000);
+
+      function set(el, val) {
+        const str = pad(val);
+        if (el.textContent !== str) {
+          el.textContent = str;
+          el.classList.add('tick');
+          setTimeout(() => el.classList.remove('tick'), 120);
+        }
+      }
+
+      set(els.days, d); set(els.hours, h);
+      set(els.minutes, m); set(els.seconds, s);
+    }
+
+    tick();
+    setInterval(tick, 1000);
+  </script>
+
+</body>
+</html>
