@@ -231,6 +231,22 @@
       z-index: 1;
     }
 
+    .price-anchor {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.8rem;
+      font-size: 0.55rem;
+      letter-spacing: 0.15em;
+      color: var(--dim);
+      opacity: 0;
+      animation: fadeup 0.5s ease 1.4s forwards;
+      z-index: 1;
+    }
+
+    .price-anchor span {
+      color: var(--accent);
+    }
+
     @keyframes fadeup {
       from { opacity: 0; transform: translateY(10px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -315,6 +331,10 @@
 
   <div class="footer">
     OPENCLUTCH &nbsp;·&nbsp; OpenClaw DAO &nbsp;·&nbsp; nemonic-ui &nbsp;·&nbsp; the stack runs local now
+  </div>
+
+  <div class="price-anchor">
+    $CLUTCH &nbsp;<span>$1.00</span>
   </div>
 
   <script>
